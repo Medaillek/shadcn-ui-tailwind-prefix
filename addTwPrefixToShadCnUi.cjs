@@ -2,8 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
-// Préfixe à ajouter
+// Prefix to update
 const prefix = 'tw-';
+
+// Update your component directory path
+transformDirectory('./components/ui');
+const prefixedClass = addPrefix("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70")
+console.log(prefixedClass)
+
+
+
+
 
 // Regex pour trouver les classes Tailwind
 
@@ -71,8 +80,3 @@ function transformDirectory(dirPath) {
   filePaths.forEach(transformFile);
 }
 
-// Utilisez cette fonction pour transformer les classes dans tous les fichiers de vos composants
-
-transformDirectory('./components/ui');
-const prefixedClass = addPrefix("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70")
-console.log(prefixedClass)
