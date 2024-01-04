@@ -2,21 +2,17 @@ const fs = require('fs');
 const path = require('path');
 const glob = require('glob');
 
-// Prefix to update
+// Préfixe à ajouter
 const prefix = 'tw-';
 
-// Update your component directory path
-transformDirectory('./components/ui');
-const prefixedClass = addPrefix("text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70")
-console.log(prefixedClass)
-
-
-
+// transformDirectory('./components/ui');
+/* const prefixedClass = addPrefix('z-50 w-72 rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2')
+console.log(prefixedClass) */
 
 
 // Regex pour trouver les classes Tailwind
 
-const classNamesRegex = /(?<=className=.*?\s*["'`])([\w\d:a-zA-Z0-9-\]\[\s\%\=\/.&>\(\)]*)(?=\s*["'`])/gm
+const classNamesRegex = /(?<=className=(.|[\n])*["'`])([\w\n\d\s\:\&\-\_\[\]\(\)~\.]*)(?=\s?["'`])/gm
 const conditionnalClassNamesRegex = /(?<=&&\s*["'`])([\w\d:a-zA-Z0-9-\]\[\s\%\=\/.&>\(\)]*)(?=.*["'`])/gm
 
 
@@ -80,3 +76,14 @@ function transformDirectory(dirPath) {
   filePaths.forEach(transformFile);
 }
 
+// Utilisez cette fonction pour transformer les classes dans tous les fichiers de vos composants
+
+const readline = require('node:readline').createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+readline.question(`File name : `, name => {
+  const file = path.join(process.cwd(), `./components/ui/${name}.tsx`);
+  transformFile(file)
+  readline.close();
+});
