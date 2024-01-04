@@ -12,16 +12,17 @@ console.log(prefixedClass) */
 
 // Regex pour trouver les classes Tailwind
 
-const classNamesRegex = /(?<=className=(.|[\n])*["'`])([\w\n\d\s\:\&\-\_\[\]\(\)~\.]*)(?=\s?["'`])/gm
-const conditionnalClassNamesRegex = /(?<=&&\s*["'`])([\w\d:a-zA-Z0-9-\]\[\s\%\=\/.&>\(\)]*)(?=.*["'`])/gm
-
+const classNamesRegex = /((?<=className=.*\n*\s*["'`])|(?<=cva\(.*\n*\s*["'`])|(?<=&&.*\n*\s*["'`]))([\w\n\d\s\:\&\-\_\[\]~\.=\/\(\)%\>]*)(?=\s*["'`])/gm
+/* const conditionnalClassNamesRegex = /(?<=&&\s*["'`])([\w\d:a-zA-Z0-9-\]\[\s\%\=\/.&>\(\)]*)(?=.*["'`])/gm
+ */
 
 // Fonction pour ajouter le préfixe à une classe
 function addPrefix(classNameMatch) {
   const classNames = classNameMatch.replace(/\s+/, ' ').split(/\s/gm)
 
   let finalClassNames = ''
-  for (const className of classNames) {
+  for (const rawClassName of classNames) {
+    const className = rawClassName.trim();
     if (className === 'sr-only' || className === 'not-sr-only') {
       finalClassNames += `${className} `;
       continue;
@@ -59,7 +60,7 @@ function addPrefix(classNameMatch) {
 }
 
 function applyRegexOnString(content) {
-  return content.replace(classNamesRegex, addPrefix).replace(conditionnalClassNamesRegex, addPrefix)
+  return content.replace(classNamesRegex, addPrefix)
 }
 
 
